@@ -1,26 +1,102 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+// --- Routing ---
+import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
+import history from './services/history';
+
+// --- Logo ---
+import TodoLogo from './img/todo_logo.svg';
+
+// --- Theming ---
+import {ThemeProvider} from 'styled-components';
+import LightTheme from './theme/light';
+import DarkTheme from './theme/dark';
+import ThemeSwitcher from './components/common/ThemeSwitcher';
+
+// --- Global Styles ---
+import styled from 'styled-components';
+import { GlobalStyle } from './GlobalStyle';
+
+// --- Pages ---
+import {LoginPage, ToDoListPage, ErrorPage} from './components/pages';
+
+// --- Container ---
+import Body from './components/containers/Body';
+
+// --- Common ---
+import Heading1 from './components/common/Heading1';
+
+// --- Styled Components ---
+const UserData = styled.div`
+  font-size: 0.9rem;
+  padding: 5px;
+`;
+const LoginFailureAlert = styled.div`
+  width: 100%;
+  background: red;
+  color: #fff;
+  padding: 10px 0;
+  text-align: center;
+  display: ${props => props.loginFailure ? 'block' : 'none'};;
+`;
+
+class App extends React.Component  {
+  state = {
+    theme: LightTheme,
+    username: '',
+    password: '',
+    loginFailure: false
+  }
+  handleToggleTheme = () => {
+    this.setState({
+      theme: this.state.theme.id === 'light' ? DarkTheme : LightTheme
+    });
+  }
+  handleLoginSubmit = (user, pw) => {
+    if(user === 'Wally' && pw === '12345') {
+      this.setState({
+      username: user,
+      password: pw,
+      loginFailure: false
+      });
+      this.props.history.push('/todo-list');
+    } else if (user === 'Juli' && pw === '12345') {
+      this.setState({
+      username: user,
+      password: pw,
+      loginFailure: false
+      });
+      this.props.history.push('/todo-list');
+    } else {
+      this.setState({
+      loginFailure: true
+      });
+    }
+  }
+  render() {
+    return (
+      <div className="App">
+      <ThemeProvider theme={this.state.theme}>
+        <ThemeSwitcher onClick={this.handleToggleTheme} >
+        <div></div><div></div>
+        </ThemeSwitcher>
+        <LoginFailureAlert loginFailure={this.state.loginFailure}>{(this.state.loginFailure) ? 'Login wrong!' : ''}</LoginFailureAlert>
+        <UserData>
+          Username: {this.state.username}
+        </UserData>
+        <Heading1><img src={TodoLogo} alt="Todo Logo" /></Heading1>
+        <Body>
+        <Switch history={history} >
+            <Route path="/" render={ props => (<LoginPage handleLoginSubmit={this.handleLoginSubmit} />) } exact />
+            <Route path="/todo-list" render={ props => (<ToDoListPage state={this.state} />) } />
+            <Route component={ErrorPage} />
+        </Switch>
+        </Body>
+      <GlobalStyle />
+      </ThemeProvider>
+      </div>
+    );
+  }
 }
 
-export default App;
+export default withRouter(App);
