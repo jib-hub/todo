@@ -3,7 +3,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## TODO APP
 material ui, axios
 
-###Dependencies install:
+### Dependencies install:
 git init
 git .....
 
