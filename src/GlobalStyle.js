@@ -21,7 +21,9 @@ export const GlobalStyle = createGlobalStyle`
     -moz-osx-font-smoothing: grayscale;
     color: ${props => props.theme.textColor};
   }
-
+  input {
+    color: ${props => props.theme.textColor} !important;
+  }
   code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
       monospace;

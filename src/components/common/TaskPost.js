@@ -88,6 +88,21 @@ export default class TaskPost extends React.Component {
         this.props.handleDataChange();
       })
   }
+  handleSubmitByKey = () => {
+
+    const task = {
+      name: this.state.name,
+      cat: this.state.cat,
+      user: this.state.user
+    };
+
+    axios.post(`https://5eb1a93336d3ee001682e16b.mockapi.io/tasks`, { name: task.name, cat: task.cat, user: task.user })
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+        this.props.handleDataChange();
+      })
+  }
 
   render() {
     let input;
@@ -99,10 +114,21 @@ export default class TaskPost extends React.Component {
           <InputField
             hintText="Enter new task"
             label="new Task"
-            onChange={this.handleChangeName} />
+            onKeyPress={(event) => {
+              var code = event.keyCode || event.which;
+              if(code === 13) {
+              this.handleSubmitByKey();
+              }
+            }} onChange={this.handleChangeName} />
             <InputFieldPW
               hintText="Enter Category"
               label="Category"
+              onKeyPress={(event) => {
+                var code = event.keyCode || event.which;
+                if(code === 13) {
+                this.handleSubmitByKey();
+                }
+              }}
               onChange={this.handleChangeCat} />
           <AddButton type="submit">ADD</AddButton>
         </form>
