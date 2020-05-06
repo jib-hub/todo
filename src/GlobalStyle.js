@@ -13,6 +13,7 @@ export const GlobalStyle = createGlobalStyle`
     background: -webkit-linear-gradient(top,  ${props => props.theme.backgroundColorGradientStart} 0%, ${(props) => props.theme.backgroundColorGradientMiddle ? ` ${props.theme.backgroundColorGradientMiddle} 50%,` : ""} ${props => props.theme.backgroundColorGradientEnd} 100%);
     background: linear-gradient(to bottom,  ${props => props.theme.backgroundColorGradientStart} 0%, ${(props) => props.theme.backgroundColorGradientMiddle ? ` ${props.theme.backgroundColorGradientMiddle} 50%,` : ""} ${props => props.theme.backgroundColorGradientEnd} 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='${props => props.theme.backgroundColorGradientStart}', endColorstr='${props => props.theme.backgroundColorGradientEnd}',GradientType=0 );
+    background-attachment: fixed;
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
       'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
