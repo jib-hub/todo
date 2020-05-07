@@ -75,37 +75,48 @@ export default class TaskPost extends React.Component {
 
     event.preventDefault();
 
-    const task = {
-      name: this.state.name,
-      cat: this.state.cat,
-      user: this.state.user
-    };
+    if(this.state.name !== '') {
+      const task = {
+        name: this.state.name,
+        cat: this.state.cat,
+        user: this.state.user
+      };
 
-    axios.post(`https://5eb1a93336d3ee001682e16b.mockapi.io/tasks`, { name: task.name, cat: task.cat, user: task.user })
-      .then(res => {
-        console.log(res);
-        console.log(res.data);
-        this.props.handleDataChange();
-      })
+      axios.post(`https://5eb1a93336d3ee001682e16b.mockapi.io/tasks`, { name: task.name, cat: task.cat, user: task.user })
+        .then(res => {
+          console.log(res);
+          console.log(res.data);
+          this.props.handleDataChange();
+          this.setState({ name: '' });
+          this.setState({ cat: '' });
+        })
+    } else {
+      alert('Task empty! Please name your task!');
+    }
   }
   handleSubmitByKey = event => {
     event.preventDefault();
-    const task = {
-      name: this.state.name,
-      cat: this.state.cat,
-      user: this.state.user
-    };
+    if(this.state.name !== '') {
+      const task = {
+        name: this.state.name,
+        cat: this.state.cat,
+        user: this.state.user
+      };
 
-    axios.post(`https://5eb1a93336d3ee001682e16b.mockapi.io/tasks`, { name: task.name, cat: task.cat, user: task.user })
-      .then(res => {
-        console.log(res);
-        console.log(res.data);
-        this.props.handleDataChange();
-      })
+      axios.post(`https://5eb1a93336d3ee001682e16b.mockapi.io/tasks`, { name: task.name, cat: task.cat, user: task.user })
+        .then(res => {
+          console.log(res);
+          console.log(res.data);
+          this.props.handleDataChange();
+          this.setState({ name: '' });
+          this.setState({ cat: '' });
+        })
+    } else {
+      alert('Task empty! Please name your task!');
+    }
   }
 
   render() {
-    let input;
     return (
       <div>
         <form onSubmit={(event) => {
@@ -114,6 +125,7 @@ export default class TaskPost extends React.Component {
           <InputField
             hintText="Enter new task"
             label="new Task"
+            value={this.state.name}
             onKeyPress={(event) => {
               var code = event.keyCode || event.which;
               if(code === 13) {
@@ -123,6 +135,7 @@ export default class TaskPost extends React.Component {
             <InputFieldPW
               hintText="Enter Category"
               label="Category"
+              value={this.state.cat}
               onKeyPress={(event) => {
                 var code = event.keyCode || event.which;
                 if(code === 13) {

@@ -1,8 +1,11 @@
 import React from 'react';
 
 // --- Routing ---
-import { Route, Switch, Link, Redirect, withRouter } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import history from './services/history';
+
+// --- MD5 ---
+import md5 from 'md5';
 
 // --- Logo ---
 import TodoLogo from './img/todo_logo.svg';
@@ -60,17 +63,17 @@ class App extends React.Component  {
     });
   }
   handleLoginSubmit = (user, pw) => {
-    if(user === 'Wally' && pw === '12345') {
+    if(user === 'Wally' &&  md5(pw) === '827ccb0eea8a706c4c34a16891f84e7b') {
       this.setState({
       username: user,
-      password: pw,
+      password:  md5(pw),
       loginFailure: false
       });
       this.props.history.push('/todo-list');
-    } else if (user === 'Juli' && pw === '12345') {
+    } else if (user === 'Juli' &&  md5(pw) === '827ccb0eea8a706c4c34a16891f84e7b') {
       this.setState({
       username: user,
-      password: pw,
+      password:  md5(pw),
       loginFailure: false
       });
       this.props.history.push('/todo-list');

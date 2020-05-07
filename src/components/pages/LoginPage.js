@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Wrapper from '../containers/Wrapper'
 import Heading2 from '../common/Heading2';
@@ -52,6 +51,12 @@ class LoginPage extends React.Component {
         hintText="Enter your Username"
         label="Name"
         variant="outlined"
+        onKeyPress={(event) => {
+          var code = event.keyCode || event.which;
+          if(code === 13) {
+            this.props.handleLoginSubmit(this.state.name, this.state.password);
+          }
+        }}
         onChange={(event) => {this.setState({
           name: event.target.value
         })}}
@@ -62,6 +67,12 @@ class LoginPage extends React.Component {
         hintText="Enter your Password"
         label="Password"
         variant="outlined"
+        onKeyPress={(event) => {
+          var code = event.keyCode || event.which;
+          if(code === 13) {
+            this.props.handleLoginSubmit(this.state.name, this.state.password);
+          }
+        }}
         onChange={(event) => {this.setState({
           password: event.target.value
         })}}

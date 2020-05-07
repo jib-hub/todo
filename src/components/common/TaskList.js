@@ -2,7 +2,6 @@ import React from 'react';
 
 import axios from 'axios';
 import styled from 'styled-components';
-import Spacer from './Spacer'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import Checkbox from '@material-ui/core/Checkbox';
 import { withStyles } from '@material-ui/core/styles';
@@ -47,6 +46,7 @@ const TaskContainer = styled.div`
 	background: #fff;
 	color: black;
 	padding: 20px;
+  display: ${props => (props.show) ? 'block' : 'none'}
 `;
 const TaskLine = styled.div`
   transition: transform .5s ease;
@@ -57,7 +57,7 @@ const TaskLine = styled.div`
   height: 2px;
   border-radius: 50%;
   background: green;
-  transform: ${props => (props.show)? 'translateX(0%)' : 'translateX(-100%)'};
+  transform: ${props => (props.show) ? 'translateX(0%)' : 'translateX(-100%)'};
 `;
 const DeleteIcon = styled(DeleteForeverIcon)`
   margin-left: auto;
@@ -108,23 +108,23 @@ export default class TaskList extends React.Component {
       })
   }
   handleChange = (key, state) => {
-    //Change State .put(`/tools/${id}`, modifyTool)
     axios.put(`https://5eb1a93336d3ee001682e16b.mockapi.io/tasks/${key}`, {state: !state})
       .then(res => {
         this.handleDataChange();
         console.log(res);
         console.log(res.data);
       })
-    console.log('Key: '+key);
   }
   render() {
     this.state.persons.sort((a, b) => (a.cat > b.cat) ? 1 : -1);
     let newCat = false;
     let lastCat;
+    const filtered = this.state.persons.filter(person => person.user === this.props.user);
+    let showContainer = (Object.keys(filtered).length !== 0) ? true : false;
     return (
       <>
       <TaskPost user={this.props.user} handleDataChange={this.handleDataChange} />
-      <TaskContainer>
+      <TaskContainer show={showContainer}>
         { this.state.persons.map((person) =>
           {if(this.props.user === person.user){
             (lastCat !== person.cat)? newCat=true : newCat=false;
@@ -141,6 +141,8 @@ export default class TaskList extends React.Component {
               <DeleteIcon onClick={() => this.handleDelete(person.id)} />
               </FlexContainer>
             )
+          } else {
+            return '';
           }}
         )}
       </TaskContainer>
