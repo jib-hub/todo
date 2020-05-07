@@ -3,6 +3,8 @@ import axios from 'axios';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 import AddButton from './AddButton';
+import CatInputAutocompleteContent from './CatInputAutocompleteContent';
+import styled from 'styled-components';
 
 const InputField = withStyles({
   root: {
@@ -32,9 +34,7 @@ const InputField = withStyles({
   variant="outlined" {...props} />);
 const InputFieldPW = withStyles({
   root: {
-      marginRight: '5px',
-      width: '30%',
-      maxWidth: '150px',
+      width: '100%',
       '& label.Mui-focused': {
         color: '#fff',
       },
@@ -57,11 +57,32 @@ const InputFieldPW = withStyles({
   color="secondary"
   variant="outlined" {...props} />);
 
+const CatInputContainer = styled.div`
+  width: 30%;
+	max-width: 150px;
+	margin-right: 5px;
+	display: inline-flex;
+	position: relative;
+`;
+const CatInputAutocomplete = styled.div`
+  position: absolute;
+  bottom: 0;
+  transform: translateY(100%);
+  background: rgb(0,0,0,0.5);
+  color: #fff;
+  text-align: left;
+  width: 100%;
+  z-index: 999;
+  display: ${props => (props.show)? 'block' : 'none'};
+`;
+
 export default class TaskPost extends React.Component {
   state = {
     name: '',
     cat: '',
-    user: this.props.user
+    user: this.props.user,
+    autocomplete: '',
+    showAutocomplete: true
   }
 
   handleChangeName = event => {
@@ -70,7 +91,24 @@ export default class TaskPost extends React.Component {
   handleChangeCat = event => {
     this.setState({ cat: event.target.value });
   }
-
+  handleChangeCatKey = event => {
+    axios.get(`https://5eb1a93336d3ee001682e16b.mockapi.io/tasks`)
+      .then(res => {
+        const cats = res.data.map(x => (x.user===this.state.user) && x.cat).filter((v, i, a) => a.indexOf(v) === i);
+        this.setState({ autocomplete: cats });
+        this.handleAutoCompleteOpen();
+      })
+  }
+  handleAutoCompleteClick = (newCat) => {
+    this.setState({ cat: newCat });
+    this.handleAutoCompleteClose();
+  }
+  handleAutoCompleteClose = () => {
+    this.setState({ showAutocomplete: false });
+  }
+  handleAutoCompleteOpen = () => {
+    this.setState({ showAutocomplete: true });
+  }
   handleSubmit = event => {
 
     event.preventDefault();
@@ -132,7 +170,7 @@ export default class TaskPost extends React.Component {
               this.handleSubmitByKey(event);
               }
             }} onChange={this.handleChangeName} />
-            <InputFieldPW
+            <CatInputContainer><InputFieldPW
               hintText="Enter Category"
               label="Category"
               value={this.state.cat}
@@ -142,7 +180,7 @@ export default class TaskPost extends React.Component {
                 this.handleSubmitByKey(event);
                 }
               }}
-              onChange={this.handleChangeCat} />
+              onChange={this.handleChangeCat} onKeyPress={this.handleChangeCatKey}  /><CatInputAutocomplete show={this.state.showAutocomplete}><CatInputAutocompleteContent handleAutoCompleteClick={this.handleAutoCompleteClick} data={this.state.autocomplete} /></CatInputAutocomplete></CatInputContainer>
           <AddButton type="submit">ADD</AddButton>
         </form>
       </div>
