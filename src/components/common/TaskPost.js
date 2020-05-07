@@ -87,6 +87,7 @@ export default class TaskPost extends React.Component {
 
   handleChangeName = event => {
     this.setState({ name: event.target.value });
+    this.handleAutoCompleteClose();
   }
   handleChangeCat = event => {
     this.setState({ cat: event.target.value });
@@ -127,6 +128,7 @@ export default class TaskPost extends React.Component {
           this.props.handleDataChange();
           this.setState({ name: '' });
           this.setState({ cat: '' });
+          this.handleAutoCompleteClose();
         })
     } else {
       alert('Task empty! Please name your task!');
@@ -148,6 +150,7 @@ export default class TaskPost extends React.Component {
           this.props.handleDataChange();
           this.setState({ name: '' });
           this.setState({ cat: '' });
+          this.handleAutoCompleteClose();
         })
     } else {
       alert('Task empty! Please name your task!');
