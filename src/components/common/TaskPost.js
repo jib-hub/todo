@@ -61,7 +61,7 @@ export default class TaskPost extends React.Component {
   state = {
     name: '',
     cat: '',
-    user: 'juli'
+    user: this.props.user
   }
 
   handleChangeName = event => {
@@ -88,8 +88,8 @@ export default class TaskPost extends React.Component {
         this.props.handleDataChange();
       })
   }
-  handleSubmitByKey = () => {
-
+  handleSubmitByKey = event => {
+    event.preventDefault();
     const task = {
       name: this.state.name,
       cat: this.state.cat,
@@ -117,7 +117,7 @@ export default class TaskPost extends React.Component {
             onKeyPress={(event) => {
               var code = event.keyCode || event.which;
               if(code === 13) {
-              this.handleSubmitByKey();
+              this.handleSubmitByKey(event);
               }
             }} onChange={this.handleChangeName} />
             <InputFieldPW
@@ -126,7 +126,7 @@ export default class TaskPost extends React.Component {
               onKeyPress={(event) => {
                 var code = event.keyCode || event.which;
                 if(code === 13) {
-                this.handleSubmitByKey();
+                this.handleSubmitByKey(event);
                 }
               }}
               onChange={this.handleChangeCat} />

@@ -21,7 +21,10 @@ const CustomCheckbox = withStyles({
 const FlexContainer = styled.div`
   display: flex;
   position: relative;
-  padding-top: ${props => (props.paddingTop)? '40px' : '0'}
+  padding-top: ${props => (props.paddingTop)? '40px' : '0'};
+  &:nth-child(1) {
+	   padding-top: ${props => (props.paddingTop)? '20px' : '0'};
+  }
 `;
 const Seperator = styled.div`
   width: 100%;
@@ -120,10 +123,10 @@ export default class TaskList extends React.Component {
     let lastCat;
     return (
       <>
-      <TaskPost handleDataChange={this.handleDataChange} />
+      <TaskPost user={this.props.user} handleDataChange={this.handleDataChange} />
       <TaskContainer>
         { this.state.persons.map((person) =>
-          {
+          {if(this.props.user === person.user){
             (lastCat !== person.cat)? newCat=true : newCat=false;
             lastCat = person.cat
             return (
@@ -138,7 +141,7 @@ export default class TaskList extends React.Component {
               <DeleteIcon onClick={() => this.handleDelete(person.id)} />
               </FlexContainer>
             )
-          }
+          }}
         )}
       </TaskContainer>
       </>

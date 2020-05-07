@@ -1,7 +1,7 @@
 import React from 'react';
 
 // --- Routing ---
-import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
+import { Route, Switch, Link, Redirect, withRouter } from 'react-router-dom';
 import history from './services/history';
 
 // --- Logo ---
@@ -25,6 +25,7 @@ import Body from './components/containers/Body';
 
 // --- Common ---
 import Heading1 from './components/common/Heading1';
+import PrimaryButton from './components/common/PrimaryButton';
 
 // --- Styled Components ---
 const UserData = styled.div`
@@ -37,7 +38,13 @@ const LoginFailureAlert = styled.div`
   color: #fff;
   padding: 10px 0;
   text-align: center;
-  display: ${props => props.loginFailure ? 'block' : 'none'};;
+  display: ${props => props.loginFailure ? 'block' : 'none'};
+`;
+const LogOutButton = styled(PrimaryButton)`
+  width: auto !important;
+  font-size: 0.8rem !important;
+  padding: 2px 0 1px 0 !important;
+  margin-top: 3px !important;
 `;
 
 class App extends React.Component  {
@@ -73,6 +80,14 @@ class App extends React.Component  {
       });
     }
   }
+  handleLogOut = () => {
+    this.setState({
+      username: '',
+      password: '',
+      loginFailure: false
+    });
+    this.props.history.push('/');
+  }
   render() {
     return (
       <div className="App">
@@ -82,7 +97,8 @@ class App extends React.Component  {
         </ThemeSwitcher>
         <LoginFailureAlert loginFailure={this.state.loginFailure}>{(this.state.loginFailure) ? 'Login wrong!' : ''}</LoginFailureAlert>
         <UserData>
-          Username: {this.state.username}
+          Username: {this.state.username}<br/>
+          {(this.state.username) && <LogOutButton onClick={this.handleLogOut}>LogOut</LogOutButton>}
         </UserData>
         <Heading1><img src={TodoLogo} alt="Todo Logo" /></Heading1>
         <Body>

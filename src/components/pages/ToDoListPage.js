@@ -18,7 +18,7 @@ class ToDoListPage extends React.Component {
       const content =
         <>
         <Wrapper width="boxed">
-        <TaskList />
+        <TaskList user={this.props.state.username} />
         </Wrapper>
         </>;
       if(this.props.state.username === 'Wally' && this.props.state.password === '12345') {
