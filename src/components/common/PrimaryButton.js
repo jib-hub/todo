@@ -1,5 +1,6 @@
 import { Button } from '@material-ui/core';
 import styled from 'styled-components';
+import { RespondTo } from '../../breakpoints/RespondTo';
 
 const PrimaryButton = styled(Button).attrs({
   color: 'primary'
@@ -13,6 +14,9 @@ const PrimaryButton = styled(Button).attrs({
   &:hover{
     background: ${props => props.theme.bgDarken} !important;
   }
+  ${RespondTo.xs`
+    width: 100%;
+  `}
 `;
 
 export default PrimaryButton

@@ -1,21 +1,23 @@
 import React from 'react';
 import axios from 'axios';
-import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
+import styled from 'styled-components';
+import { RespondTo } from '../../breakpoints/RespondTo';
+
+import TextField from '@material-ui/core/TextField';
 import AddButton from './AddButton';
 import CatInputAutocompleteContent from './CatInputAutocompleteContent';
-import styled from 'styled-components';
 
 const InputField = withStyles({
   root: {
       marginRight: '5px',
-      width: '60%',
-      maxWidth: '400px',
+      width: '100%',
+      maxWidth: '600px',
       '& label.Mui-focused': {
         color: '#fff'
       },
       [`& fieldset`]: {
-      borderRadius: '4px 0 0 4px',
+      borderRadius: '0',
       },
       '& .MuiInput-underline:after': {
         borderBottomColor: 'green'
@@ -32,9 +34,10 @@ const InputField = withStyles({
 })((props) => <TextField
   color="secondary"
   variant="outlined" {...props} />);
-const InputFieldPW = withStyles({
+const InputFieldCat = withStyles({
   root: {
       width: '100%',
+      maxWidth: '600px',
       '& label.Mui-focused': {
         color: '#fff',
       },
@@ -58,8 +61,18 @@ const InputFieldPW = withStyles({
   variant="outlined" {...props} />);
 
 const CatInputContainer = styled.div`
-  width: 30%;
-	max-width: 150px;
+  width: 100%;
+  margin-top: 15px;
+  ${RespondTo.xs`
+  `}
+  ${RespondTo.sm`
+    margin-top: 0px;
+  `}
+  ${RespondTo.md`
+  `}
+  ${RespondTo.lg`
+  	max-width: 150px;
+  `}
 	margin-right: 5px;
 	display: inline-flex;
 	position: relative;
@@ -173,7 +186,8 @@ export default class TaskPost extends React.Component {
               this.handleSubmitByKey(event);
               }
             }} onChange={this.handleChangeName} />
-            <CatInputContainer><InputFieldPW
+            <CatInputContainer>
+              <InputFieldCat
               hintText="Enter Category"
               label="Category"
               value={this.state.cat}
@@ -181,9 +195,15 @@ export default class TaskPost extends React.Component {
                 var code = event.keyCode || event.which;
                 if(code === 13) {
                 this.handleSubmitByKey(event);
-                }
+              } else {
+                this.handleChangeCatKey();
+              }
               }}
-              onChange={this.handleChangeCat} onKeyPress={this.handleChangeCatKey}  /><CatInputAutocomplete show={this.state.showAutocomplete}><CatInputAutocompleteContent handleAutoCompleteClick={this.handleAutoCompleteClick} data={this.state.autocomplete} /></CatInputAutocomplete></CatInputContainer>
+              onChange={this.handleChangeCat} />
+              <CatInputAutocomplete show={this.state.showAutocomplete}>
+              <CatInputAutocompleteContent handleAutoCompleteClick={this.handleAutoCompleteClick} data={this.state.autocomplete} />
+              </CatInputAutocomplete>
+            </CatInputContainer>
           <AddButton type="submit">ADD</AddButton>
         </form>
       </div>

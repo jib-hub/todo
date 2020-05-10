@@ -41,11 +41,11 @@ const Task = styled.div`
 `;
 const TaskContainer = styled.div`
   max-width: 700px;
-  width: 100%;
+  width: 90%;
 	margin: 50px auto;
 	background: #fff;
 	color: black;
-	padding: 20px;
+	padding: 5%;
   display: ${props => (props.show) ? 'block' : 'none'}
 `;
 const TaskLine = styled.div`
@@ -137,7 +137,7 @@ export default class TaskList extends React.Component {
                   onChange={() => this.handleChange(person.id, person.state)}
                   inputProps={{ 'aria-label': 'primary checkbox' }}
               />
-              <Task><div key={person.id}>{person.name}</div><TaskCat>{person.cat}</TaskCat><TaskLine show={person.state} /></Task>
+              <Task><div key={person.id}>{person.name}</div><TaskLine show={person.state} /></Task>
               <DeleteIcon onClick={() => this.handleDelete(person.id)} />
               </FlexContainer>
             )

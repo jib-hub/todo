@@ -10,8 +10,8 @@ import TextField from '@material-ui/core/TextField';
 const LoginField = withStyles({
   root: {
       marginTop: '1rem !important',
-      width: '90%',
-      maxWidth: '400px',
+      width: '100%',
+      maxWidth: '600px',
       '& label.Mui-focused': {
         color: '#fff'
       },
@@ -33,8 +33,9 @@ const LoginField = withStyles({
 
 const LoginButton = styled(PrimaryButton)`
   margin-top: 1rem !important;
-  width: 90%;
-  max-width: 400px;
+  width: 100%;
+  max-width: 600px;
+
 `;
 
 class LoginPage extends React.Component {

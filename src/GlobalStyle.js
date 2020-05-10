@@ -40,7 +40,7 @@ export const GlobalStyle = createGlobalStyle`
 
   .boxed {
     margin: 0 auto;
-    width: 80%;
+    width: 90%;
     ${RespondTo.xs`
     `}
     ${RespondTo.sm`
