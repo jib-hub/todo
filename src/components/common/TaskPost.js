@@ -78,15 +78,17 @@ const CatInputContainer = styled.div`
 	position: relative;
 `;
 const CatInputAutocomplete = styled.div`
-  position: absolute;
-  bottom: 0;
-  transform: translateY(100%);
   background: rgb(0,0,0,0.5);
   color: #fff;
   text-align: left;
   width: 100%;
   z-index: 999;
   display: ${props => (props.show)? 'block' : 'none'};
+  ${RespondTo.md`
+    position: absolute;
+    bottom: 0;
+    transform: translateY(100%);
+  `}
 `;
 
 export default class TaskPost extends React.Component {
@@ -95,7 +97,7 @@ export default class TaskPost extends React.Component {
     cat: '',
     user: this.props.user,
     autocomplete: '',
-    showAutocomplete: true
+    showAutocomplete: false
   }
 
   handleChangeName = event => {
