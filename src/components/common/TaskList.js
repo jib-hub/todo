@@ -51,12 +51,10 @@ const TaskContainer = styled.div`
 const TaskLine = styled.div`
   transition: transform .5s ease;
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  transform: translate(0%, 10%);
   width: 100%;
-  height: 2px;
-  border-radius: 50%;
-  background: green;
+  height: 60%;
+  background: rgba(0, 255, 22, 0.5);
   transform: ${props => (props.show) ? 'translateX(0%)' : 'translateX(-100%)'};
 `;
 const DeleteIcon = styled(DeleteForeverIcon)`
@@ -67,11 +65,6 @@ const DeleteIcon = styled(DeleteForeverIcon)`
   &:hover {
     fill: ${props => props.theme.dangerDarken} !important;
   }
-`;
-const TaskCat = styled.div`
-  color: grey;
-  position: absolute;
-  right: 0;
 `;
 const HeadingCat = styled.div`
 	position: absolute;
